@@ -1,15 +1,10 @@
 import React from "react";
-// components
-import OrdersOverview from "./pages/OrdersOverview";
-import UserManagement from "./pages/UserManagement";
+import AppRoutes from "./routes";
 
 const App: React.FC = () => {
   return (
     <>
-      <UserManagement />
-      <br />
-      <br />
-      <OrdersOverview />
+      <AppRoutes />
     </>
   );
 };
