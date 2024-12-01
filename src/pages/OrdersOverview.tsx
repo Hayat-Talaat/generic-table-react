@@ -19,7 +19,6 @@ const OrdersOverview: React.FC = () => {
     (state: RootState) => state.orders
   );
 
-  const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -29,7 +28,6 @@ const OrdersOverview: React.FC = () => {
   const handleViewDetails = (orderId: string) => {
     setModalOpen(true);
     dispatch(fetchOrderDetails(orderId));
-    setSelectedOrderId(orderId);
   };
 
   const closeModal = () => {
