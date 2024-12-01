@@ -52,18 +52,11 @@
       "isActive": true
     },
     {
-      "id": "2",
-      "username": "guest_user",
-      "email": "guest@example.com",
-      "role": "Guest",
-      "isActive": false
-    },
-    {
       "id": "3",
       "username": "regular_user",
       "email": "user@example.com",
       "role": "User",
-      "isActive": true
+      "isActive": false
     }
   ]
 }

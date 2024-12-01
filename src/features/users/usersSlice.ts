@@ -1,62 +1,123 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../../api/axios";
-import { User, UserRole } from "../../types/UserType";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import axios from "../../api/axios";
+import { User } from "../../types/UserType";
 
-interface UserState {
+interface UsersState {
   users: User[];
+  userDetails: User | null;
   loading: boolean;
+  error: string | null;
 }
 
-const initialState: UserState = {
+const initialState: UsersState = {
   users: [],
+  userDetails: null,
   loading: false,
+  error: null,
 };
 
-// Async Thunks
+// Fetch all users
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
-  const response = await axiosInstance.get<User[]>("/users");
+  const response = await axios.get<User[]>("/users");
   return response.data;
 });
 
-export const updateUserRole = createAsyncThunk(
-  "users/updateUserRole",
-  async ({ id, role }: { id: string; role: string }) => {
-    await axiosInstance.patch(`/users/${id}`, { role });
-    return { id, role };
+// Fetch user details by ID
+export const getUserDetails = createAsyncThunk(
+  "users/getUserDetails",
+  async (userId: string) => {
+    const response = await axios.get<User>(`/users/${userId}`);
+    return response.data;
   }
 );
 
-export const toggleUserStatus = createAsyncThunk(
-  "users/toggleUserStatus",
-  async (id: string) => {
-    await axiosInstance.patch(`/users/${id}/status`);
-    return id;
+// Update user status (activate/deactivate)
+export const updateUserStatus = createAsyncThunk(
+  "users/updateUserStatus",
+  async ({ id, isActive }: { id: string; isActive: boolean }) => {
+    await axios.patch(`/users/${id}`, { isActive });
+    return { id, isActive };
   }
 );
 
+// Delete a user
+export const deleteUser = createAsyncThunk(
+  "users/deleteUser",
+  async (userId: string) => {
+    await axios.delete(`/users/${userId}`);
+    return userId;
+  }
+);
+
+// Slice
 const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Fetch users
       .addCase(fetchUsers.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
+      .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
+        state.loading = false;
         state.users = action.payload;
+      })
+      .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.error.message || "Failed to fetch users.";
       })
-      .addCase(fetchUsers.rejected, (state) => {
+      // Get user details
+      .addCase(getUserDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        getUserDetails.fulfilled,
+        (state, action: PayloadAction<User>) => {
+          state.loading = false;
+          state.userDetails = action.payload;
+        }
+      )
+      .addCase(getUserDetails.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.error.message || "Failed to fetch user details.";
       })
-      .addCase(updateUserRole.fulfilled, (state, action) => {
-        const user = state.users.find((u) => u.id === action.payload.id);
-        if (user) user.role = action.payload.role as UserRole;
+      // Update user status
+      .addCase(updateUserStatus.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
-      .addCase(toggleUserStatus.fulfilled, (state, action) => {
-        const user = state.users.find((u) => u.id === action.payload);
-        if (user) user.isActive = !user.isActive;
+      .addCase(
+        updateUserStatus.fulfilled,
+        (state, action: PayloadAction<{ id: string; isActive: boolean }>) => {
+          state.loading = false;
+          const { id, isActive } = action.payload;
+          const user = state.users.find((user) => user.id === id);
+          if (user) {
+            user.isActive = isActive;
+          }
+        }
+      )
+      .addCase(updateUserStatus.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Failed to update user status.";
+      })
+      // Delete user
+      .addCase(deleteUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteUser.fulfilled, (state, action: PayloadAction<string>) => {
+        state.loading = false;
+        const userId = action.payload;
+        state.users = state.users.filter((user) => user.id !== userId);
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Failed to delete user.";
       });
   },
 });

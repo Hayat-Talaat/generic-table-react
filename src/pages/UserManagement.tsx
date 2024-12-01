@@ -1,71 +1,149 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../store";
 import {
   fetchUsers,
-  updateUserRole,
-  toggleUserStatus,
+  getUserDetails,
+  updateUserStatus,
+  deleteUser,
 } from "../features/users/usersSlice";
-import { User, UserRole } from "../types/UserType";
+// types
+import { User } from "../types/UserType";
+import { Column } from "../types/TableTypes";
+// components
 import GenericTable from "../components/Table";
 import Spinner from "../components/Spinner";
+import Modal from "../components/Modal";
 
 const UserManagement: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { users, loading } = useSelector((state: RootState) => state.users);
+  const { users, loading, userDetails } = useSelector(
+    (state: RootState) => state.users
+  );
+
+  //   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  const handleRoleChange = (id: string, role: UserRole) => {
-    dispatch(updateUserRole({ id, role }));
+  const handleEditUser = (userId: string) => {
+    setModalOpen(true);
+    dispatch(getUserDetails(userId));
+    // setSelectedUserId(userId);
   };
 
-  const handleToggleStatus = (id: string) => {
-    dispatch(toggleUserStatus(id));
+  const handleCloseModal = () => {
+    setModalOpen(false);
   };
 
-  const columns = [
+  const handleToggleStatus = (userId: string, isActive: boolean) => {
+    dispatch(updateUserStatus({ id: userId, isActive: !isActive }));
+  };
+
+  const handleDeleteUser = (userId: string) => {
+    dispatch(deleteUser(userId));
+  };
+
+  //   const handleRoleChange = (id: string, role: UserRole) => {
+  //     dispatch(updateUserRole({ id, role }));
+  //   };
+
+  //   const handleToggleStatus = (id: string) => {
+  //     dispatch(toggleUserStatus(id));
+  //   };
+
+  const columns: Column<User>[] = [
     { header: "User ID", accessor: "id" },
     { header: "Username", accessor: "username" },
     { header: "Email", accessor: "email" },
     {
       header: "Role",
       accessor: "role",
-      render: (value: string, row: User) => (
-        <select
-          value={value}
-          onChange={(e) => handleRoleChange(row.id, e.target.value as UserRole)}
-          className="border p-1 rounded"
-        >
-          {Object.values(UserRole).map((role) => (
-            <option key={role} value={role}>
-              {role}
-            </option>
-          ))}
-        </select>
-      ),
+      render: (value) => <span className="capitalize">{value}</span>,
     },
     {
       header: "Active Status",
       accessor: "isActive",
-      render: (value: boolean, row: User) => (
-        <button
-          onClick={() => handleToggleStatus(row.id)}
+      render: (value) => (
+        <span
           className={`px-2 py-1 rounded text-white ${
             value ? "bg-green-500" : "bg-red-500"
           }`}
         >
           {value ? "Active" : "Inactive"}
-        </button>
+        </span>
       ),
     },
   ];
 
   return (
     <div>
-      {loading ? <Spinner /> : <GenericTable data={users} columns={columns} />}
+      {loading ? (
+        <Spinner />
+      ) : Array.isArray(users) ? (
+        <GenericTable
+          data={users || []}
+          columns={columns}
+          actions={(user: User) => (
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleEditUser(user.id)}
+                className="text-blue-500 hover:underline"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleToggleStatus(user.id, user.isActive)}
+                className={`text-white px-2 py-1 rounded ${
+                  user.isActive ? "bg-red-500" : "bg-green-500"
+                }`}
+              >
+                {user.isActive ? "Deactivate" : "Activate"}
+              </button>
+              <button
+                onClick={() => handleDeleteUser(user.id)}
+                className="text-red-500 hover:underline"
+              >
+                Delete
+              </button>
+            </div>
+          )}
+        />
+      ) : (
+        <p>No data available.</p>
+      )}
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        {loading ? (
+          <Spinner />
+        ) : userDetails ? (
+          <div className="space-y-4">
+            <div className="flex justify-between">
+              <span className="font-bold text-gray-700">User ID:</span>
+              <span>{userDetails.id}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-bold text-gray-700">Username:</span>
+              <span>{userDetails.username}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-bold text-gray-700">Email:</span>
+              <span>{userDetails.email}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-bold text-gray-700">Role:</span>
+              <span>{userDetails.role}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-bold text-gray-700">Active Status:</span>
+              <span>{userDetails.isActive ? "Active" : "Inactive"}</span>
+            </div>
+          </div>
+        ) : (
+          <p className="text-gray-500 text-center">No details available.</p>
+        )}
+      </Modal>
     </div>
   );
 };
