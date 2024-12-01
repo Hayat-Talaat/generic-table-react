@@ -1,6 +1,6 @@
 # Octane Dashboard
 
-## Description
+**Description**
 
 Octane Dashboard is a web application designed for managing orders and user accounts. It features a clean and modern user interface with a side menu for navigation. The application includes:
 
@@ -11,31 +11,59 @@ Octane Dashboard is a web application designed for managing orders and user acco
 
 # Features
 
-## Front-End
+**Front-End**
 
 - Developed with React, utilizing TypeScript for type safety.
 - State management with Redux Toolkit.
 - UI styling with Tailwind CSS.
 - Navigation using React Router.
 
-## Back-End
+**Back-End**
 
 - Powered by JSON Server for mock API.
 - CRUD operations for orders and user data.
 
 # How the Project Works
 
-## Front-End
+**Front-End**
 
-- Clone the repository: `git clone [repo-url](https://github.com/Hayat-Talaat/generic-table-react)`
+- Clone the repository: `git clone https://github.com/Hayat-Talaat/generic-table-react`
 - Navigate to the front-end folder
 - Install dependencies: `npm install`
 - Start the development server: `npm run dev`
 
-## Back-End
+**Back-End**
 
 - Start the JSON Server: `npx json-server --watch db.json --port 5000`
 - The mock API will be available at [http://localhost:5000](http://localhost:5000).
+
+# Project Structure
+
+src/
+├── api/
+│ └── axios.ts # Axios configuration
+├── components/
+│ ├── GenericTable.tsx # Reusable generic table component
+│ ├── Modal.tsx # Modal component
+│ ├── Spinner.tsx # Loading spinner
+│ └── SideMenu.tsx # Navigation side menu
+├── features/
+│ ├── orders/
+│ │ └── ordersSlice.ts # Redux slice for orders
+│ └── users/
+│ └── usersSlice.ts # Redux slice for users
+├── pages/
+│ ├── OrdersOverview.tsx # Orders management page
+│ ├── UserManagement.tsx # User management page
+│ └── WelcomePage.tsx # Welcome dashboard
+├── types/
+│ ├── ApiResponse.ts # API response types
+│ ├── OrderType.ts # Order-related types
+│ └── UserType.ts # User-related types
+├── store/
+│ └── store.ts # Redux store configuration
+├── routes.tsx # Application routes
+└── index.tsx # Entry point
 
 # React + TypeScript + Vite
 
