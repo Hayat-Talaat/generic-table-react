@@ -4,52 +4,84 @@ import {
   GetOrderDetailsResponse,
   UpdateOrderStatusRequest,
 } from "../../types/OrderType";
-import axiosInstance from "../../api/axios";
+import axios from "../../api/axios";
+import { addNotification } from "../notifications/notificationsSlice";
 
 interface OrdersState {
   orders: Order[];
   orderDetails: GetOrderDetailsResponse | null;
   loading: boolean;
+  error: string | null;
 }
 
 const initialState: OrdersState = {
   orders: [],
   orderDetails: null,
   loading: false,
+  error: null,
 };
 
 // Async actions
-export const fetchOrders = createAsyncThunk("orders/fetchOrders", async () => {
-  const response = await axiosInstance.get<Order[]>("/orders");
-  return response.data;
-});
+export const fetchOrders = createAsyncThunk(
+  "orders/fetchOrders",
+  async (_, { dispatch }) => {
+    try {
+      const response = await axios.get<Order[]>("/orders");
+      dispatch(addNotification("Orders fetched successfully!"));
+      return response.data;
+    } catch (error) {
+      dispatch(addNotification("Failed to fetch users."));
+      throw error;
+    }
+  }
+);
 
 export const fetchOrderDetails = createAsyncThunk(
   "orders/fetchOrderDetails",
-  async (orderId: string) => {
-    const response = await axiosInstance.get<GetOrderDetailsResponse>(
-      `/orders/${orderId}`
-    );
-    return response.data;
+  async (orderId: string, { dispatch }) => {
+    try {
+      const response = await axios.get<GetOrderDetailsResponse>(
+        `/orders/${orderId}`
+      );
+      dispatch(addNotification("Order details fetched successfully!"));
+      return response.data;
+    } catch (error) {
+      dispatch(addNotification("Failed to fetch order details."));
+      throw error;
+    }
   }
 );
 
 export const updateOrderStatus = createAsyncThunk(
   "orders/updateOrderStatus",
-  async (updateRequest: UpdateOrderStatusRequest) => {
-    const response = await axiosInstance.patch(
-      `/orders/${updateRequest.id}`,
-      updateRequest
-    );
-    return response.data;
+  async (updateRequest: UpdateOrderStatusRequest, { dispatch }) => {
+    try {
+      const response = await axios.patch(
+        `/orders/${updateRequest.id}`,
+        updateRequest
+      );
+      dispatch(addNotification("Order status updated successfully!"));
+      return response.data;
+    } catch (error) {
+      dispatch(addNotification("Failed to update order status."));
+      throw error;
+    }
   }
 );
 
 export const deleteOrder = createAsyncThunk(
   "orders/deleteOrder",
-  async (orderId: string) => {
-    await axiosInstance.delete(`/orders/${orderId}`);
-    return orderId;
+  async (orderId: string, { dispatch }) => {
+    try {
+      await axios.delete(`/orders/${orderId}`);
+      dispatch(
+        addNotification(`Order with ID ${orderId} deleted successfully.`)
+      );
+      return orderId;
+    } catch (error) {
+      dispatch(addNotification(`Failed to delete order with ID ${orderId}.`));
+      throw error;
+    }
   }
 );
 
@@ -57,14 +89,7 @@ export const deleteOrder = createAsyncThunk(
 const ordersSlice = createSlice({
   name: "orders",
   initialState,
-  reducers: {
-    startLoading: (state) => {
-      state.loading = true;
-    },
-    stopLoading: (state) => {
-      state.loading = false;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       // fetchOrders

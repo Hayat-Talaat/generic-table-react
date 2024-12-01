@@ -39,7 +39,8 @@ Octane Dashboard is a web application designed for managing orders and user acco
 
 # Project Structure
 
-`src/
+```
+src/
 ├── api/
 │ └── axios.ts # Axios configuration
 ├── components/
@@ -64,7 +65,7 @@ Octane Dashboard is a web application designed for managing orders and user acco
 │ └── store.ts # Redux store configuration
 ├── routes.tsx # Application routes
 └── index.tsx # Entry point
-`
+```
 
 # API Endpoints
 
@@ -74,7 +75,9 @@ Octane Dashboard is a web application designed for managing orders and user acco
 - GET /orders/:id: Fetch order details by ID.
 - PATCH /orders/:id: Update order status.
 - DELETE /orders/:id: Delete an order.
+
   **Users API**
+
 - GET /users: Fetch all users.
 - GET /users/:id: Fetch user details by ID.
 - PATCH /users/:id: Update user status.

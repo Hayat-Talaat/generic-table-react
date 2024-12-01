@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "../../api/axios";
 import { User } from "../../types/UserType";
+import { addNotification } from "../notifications/notificationsSlice";
 
 interface UsersState {
   users: User[];
@@ -17,41 +18,64 @@ const initialState: UsersState = {
 };
 
 // Fetch all users
-export const fetchUsers = createAsyncThunk<User[]>(
+export const fetchUsers = createAsyncThunk(
   "users/fetchUsers",
-  async () => {
-    const response = await axios.get<User[]>("/users");
-    return response.data;
+  async (_, { dispatch }) => {
+    try {
+      const response = await axios.get<User[]>("/users");
+      dispatch(addNotification("Users fetched successfully!"));
+      return response.data;
+    } catch (error) {
+      dispatch(addNotification("Failed to fetch users."));
+      throw error;
+    }
   }
 );
 
 // Fetch user details by ID
-export const getUserDetails = createAsyncThunk<User, string>(
+export const getUserDetails = createAsyncThunk(
   "users/getUserDetails",
-  async (userId: string) => {
-    const response = await axios.get<User>(`/users/${userId}`);
-    return response.data;
+  async (userId: string, { dispatch }) => {
+    try {
+      const response = await axios.get<User>(`/users/${userId}`);
+      dispatch(addNotification("User details fetched successfully!"));
+      return response.data;
+    } catch (error) {
+      dispatch(addNotification("Failed to fetch user details."));
+      throw error;
+    }
   }
 );
 
 // Update user status (activate/deactivate)
-export const updateUserStatus = createAsyncThunk<
-  { id: string; isActive: boolean },
-  { id: string; isActive: boolean }
->(
+export const updateUserStatus = createAsyncThunk(
   "users/updateUserStatus",
-  async ({ id, isActive }: { id: string; isActive: boolean }) => {
-    await axios.patch(`/users/${id}`, { isActive });
-    return { id, isActive };
+  async ({ id, isActive }: { id: string; isActive: boolean }, { dispatch }) => {
+    try {
+      await axios.patch(`/users/${id}`, { isActive });
+      dispatch(
+        addNotification(`User with ID ${id} status updated successfully.`)
+      );
+      return { id, isActive };
+    } catch (error) {
+      dispatch(addNotification("Failed to update user status."));
+      throw error;
+    }
   }
 );
 
 // Delete a user
-export const deleteUser = createAsyncThunk<string, string>(
+export const deleteUser = createAsyncThunk(
   "users/deleteUser",
-  async (userId: string) => {
-    await axios.delete(`/users/${userId}`);
-    return userId;
+  async (userId: string, { dispatch }) => {
+    try {
+      await axios.delete(`/users/${userId}`);
+      dispatch(addNotification(`User with ID ${userId} deleted successfully.`));
+      return userId;
+    } catch (error) {
+      dispatch(addNotification(`Failed to delete user with ID ${userId}.`));
+      throw error;
+    }
   }
 );
 

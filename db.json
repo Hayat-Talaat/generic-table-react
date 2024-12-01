@@ -1,25 +1,11 @@
 {
   "orders": [
     {
-      "id": "ORD123",
-      "customerName": "John Doe",
-      "orderDate": "2024-11-20T12:00:00Z",
-      "status": "Pending",
-      "totalAmount": 250.75
-    },
-    {
       "id": "ORD125",
       "customerName": "Sam Wilson",
       "orderDate": "2024-11-22T10:15:00Z",
       "status": "Delivered",
       "totalAmount": 300.99
-    },
-    {
-      "id": "ORD127",
-      "customerName": "John Doe",
-      "orderDate": "2024-11-20T12:00:00Z",
-      "status": "Pending",
-      "totalAmount": 250.75
     },
     {
       "id": "ORD128",
@@ -29,18 +15,109 @@
       "totalAmount": 125.5
     },
     {
-      "id": "ORD129",
-      "customerName": "Sam Wilson",
-      "orderDate": "2024-11-22T10:15:00Z",
-      "status": "Shipped",
-      "totalAmount": 300.99
-    },
-    {
       "id": "ORD130",
       "customerName": "Tony Stark",
       "orderDate": "2024-11-23T08:45:00Z",
-      "status": "Cancelled",
+      "status": "Delivered",
       "totalAmount": 499.99
+    },
+    {
+      "id": "ORD131",
+      "customerName": "Bruce Wayne",
+      "orderDate": "2024-11-25T16:00:00Z",
+      "status": "Pending",
+      "totalAmount": 175.5
+    },
+    {
+      "id": "ORD132",
+      "customerName": "Clark Kent",
+      "orderDate": "2024-11-23T09:20:00Z",
+      "status": "Delivered",
+      "totalAmount": 400
+    },
+    {
+      "id": "ORD133",
+      "customerName": "Diana Prince",
+      "orderDate": "2024-11-24T11:30:00Z",
+      "status": "Shipped",
+      "totalAmount": 220.3
+    },
+    {
+      "id": "ORD134",
+      "customerName": "Wade Wilson",
+      "orderDate": "2024-11-20T13:00:00Z",
+      "status": "Shipped",
+      "totalAmount": 350.1
+    },
+    {
+      "id": "ORD135",
+      "customerName": "Peter Parker",
+      "orderDate": "2024-11-21T10:10:00Z",
+      "status": "Cancelled",
+      "totalAmount": 150.75
+    },
+    {
+      "id": "ORD136",
+      "customerName": "Natasha Romanoff",
+      "orderDate": "2024-11-19T15:45:00Z",
+      "status": "Delivered",
+      "totalAmount": 200.9
+    },
+    {
+      "id": "ORD137",
+      "customerName": "Stephen Strange",
+      "orderDate": "2024-11-18T14:00:00Z",
+      "status": "Shipped",
+      "totalAmount": 420.2
+    },
+    {
+      "id": "ORD138",
+      "customerName": "Thor Odinson",
+      "orderDate": "2024-11-22T16:10:00Z",
+      "status": "Pending",
+      "totalAmount": 540.5
+    },
+    {
+      "id": "ORD139",
+      "customerName": "Loki Laufeyson",
+      "orderDate": "2024-11-24T12:00:00Z",
+      "status": "Delivered",
+      "totalAmount": 180.25
+    },
+    {
+      "id": "ORD140",
+      "customerName": "Stephen Strange",
+      "orderDate": "2024-11-23T13:40:00Z",
+      "status": "Shipped",
+      "totalAmount": 600
+    },
+    {
+      "id": "ORD141",
+      "customerName": "Barbara Gordon",
+      "orderDate": "2024-11-22T12:50:00Z",
+      "status": "Delivered",
+      "totalAmount": 320
+    },
+    {
+      "id": "ORD142",
+      "customerName": "Dick Grayson",
+      "orderDate": "2024-11-20T17:25:00Z",
+      "status": "Pending",
+      "totalAmount": 400.1
+    },
+    {
+      "id": "ORD143",
+      "customerName": "Barry Allen",
+      "orderDate": "2024-11-21T08:15:00Z",
+      "status": "Shipped",
+      "totalAmount": 275.4
+    },
+    {
+      "id": "ORD144",
+      "customerName": "Arthur Curry",
+      "orderDate": "2024-11-23T12:20:00Z",
+      "status": "Cancelled",
+      "totalAmount": 420.9
     }
   ],
   "users": [
@@ -52,11 +129,102 @@
       "isActive": true
     },
     {
-      "id": "3",
-      "username": "regular_user",
-      "email": "user@example.com",
+      "id": "4",
+      "username": "john_doe",
+      "email": "john@example.com",
+      "role": "User",
+      "isActive": true
+    },
+    {
+      "id": "5",
+      "username": "jane_smith",
+      "email": "jane@example.com",
       "role": "User",
       "isActive": false
+    },
+    {
+      "id": "7",
+      "username": "tony_stark",
+      "email": "tony@example.com",
+      "role": "Admin",
+      "isActive": false
+    },
+    {
+      "id": "10",
+      "username": "bruce_wayne",
+      "email": "bruce@example.com",
+      "role": "Admin",
+      "isActive": true
+    },
+    {
+      "id": "11",
+      "username": "stephen_strange",
+      "email": "stephen@example.com",
+      "role": "User",
+      "isActive": false
+    },
+    {
+      "id": "12",
+      "username": "diana_prince",
+      "email": "diana@example.com",
+      "role": "User",
+      "isActive": true
+    },
+    {
+      "id": "13",
+      "username": "wade_wilson",
+      "email": "wade@example.com",
+      "role": "User",
+      "isActive": true
+    },
+    {
+      "id": "14",
+      "username": "barbara_gordon",
+      "email": "barbara@example.com",
+      "role": "Admin",
+      "isActive": false
+    },
+    {
+      "id": "15",
+      "username": "dick_grayson",
+      "email": "dick@example.com",
+      "role": "User",
+      "isActive": true
+    },
+    {
+      "id": "16",
+      "username": "arthur_curry",
+      "email": "arthur@example.com",
+      "role": "Admin",
+      "isActive": false
+    },
+    {
+      "id": "17",
+      "username": "barry_allen",
+      "email": "barry@example.com",
+      "role": "User",
+      "isActive": true
+    },
+    {
+      "id": "18",
+      "username": "loki_laufeyson",
+      "email": "loki@example.com",
+      "role": "Admin",
+      "isActive": true
+    },
+    {
+      "id": "19",
+      "username": "thor_odinson",
+      "email": "thor@example.com",
+      "role": "Admin",
+      "isActive": false
+    },
+    {
+      "id": "20",
+      "username": "natasha_romanoff",
+      "email": "natasha@example.com",
+      "role": "User",
+      "isActive": true
     }
   ]
 }

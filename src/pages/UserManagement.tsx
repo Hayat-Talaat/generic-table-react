@@ -20,8 +20,6 @@ const UserManagement: React.FC = () => {
   const { users, loading, userDetails } = useSelector(
     (state: RootState) => state.users
   );
-
-  //   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -31,7 +29,6 @@ const UserManagement: React.FC = () => {
   const handleEditUser = (userId: string) => {
     setModalOpen(true);
     dispatch(getUserDetails(userId));
-    // setSelectedUserId(userId);
   };
 
   const handleCloseModal = () => {
@@ -45,14 +42,6 @@ const UserManagement: React.FC = () => {
   const handleDeleteUser = (userId: string) => {
     dispatch(deleteUser(userId));
   };
-
-  //   const handleRoleChange = (id: string, role: UserRole) => {
-  //     dispatch(updateUserRole({ id, role }));
-  //   };
-
-  //   const handleToggleStatus = (id: string) => {
-  //     dispatch(toggleUserStatus(id));
-  //   };
 
   const columns: Column<User>[] = [
     { header: "User ID", accessor: "id" },
