@@ -17,13 +17,16 @@ const initialState: UsersState = {
 };
 
 // Fetch all users
-export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
-  const response = await axios.get<User[]>("/users");
-  return response.data;
-});
+export const fetchUsers = createAsyncThunk<User[]>(
+  "users/fetchUsers",
+  async () => {
+    const response = await axios.get<User[]>("/users");
+    return response.data;
+  }
+);
 
 // Fetch user details by ID
-export const getUserDetails = createAsyncThunk(
+export const getUserDetails = createAsyncThunk<User, string>(
   "users/getUserDetails",
   async (userId: string) => {
     const response = await axios.get<User>(`/users/${userId}`);
@@ -32,7 +35,10 @@ export const getUserDetails = createAsyncThunk(
 );
 
 // Update user status (activate/deactivate)
-export const updateUserStatus = createAsyncThunk(
+export const updateUserStatus = createAsyncThunk<
+  { id: string; isActive: boolean },
+  { id: string; isActive: boolean }
+>(
   "users/updateUserStatus",
   async ({ id, isActive }: { id: string; isActive: boolean }) => {
     await axios.patch(`/users/${id}`, { isActive });
@@ -41,7 +47,7 @@ export const updateUserStatus = createAsyncThunk(
 );
 
 // Delete a user
-export const deleteUser = createAsyncThunk(
+export const deleteUser = createAsyncThunk<string, string>(
   "users/deleteUser",
   async (userId: string) => {
     await axios.delete(`/users/${userId}`);
