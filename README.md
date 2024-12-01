@@ -39,7 +39,7 @@ Octane Dashboard is a web application designed for managing orders and user acco
 
 # Project Structure
 
-~~src/
+`src/
 ├── api/
 │ └── axios.ts # Axios configuration
 ├── components/
@@ -64,7 +64,7 @@ Octane Dashboard is a web application designed for managing orders and user acco
 │ └── store.ts # Redux store configuration
 ├── routes.tsx # Application routes
 └── index.tsx # Entry point
-~~
+`
 
 # API Endpoints
 
@@ -80,53 +80,8 @@ Octane Dashboard is a web application designed for managing orders and user acco
 - PATCH /users/:id: Update user status.
 - DELETE /users/:id: Delete a user.
 
-# React + TypeScript + Vite
+# Future Improvements
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
-```
+- Integrate a real back-end API.
+- Add authentication and authorization for admin roles.
+- Enhance the UI/UX with animations and advanced filters.
