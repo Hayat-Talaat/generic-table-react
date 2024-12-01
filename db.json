@@ -1,0 +1,63 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Product A",
+      "price": 50
+    },
+    {
+      "id": 2,
+      "name": "Product B",
+      "price": 100
+    },
+    {
+      "id": 3,
+      "name": "Product C",
+      "price": 150
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD123",
+      "customerName": "John Doe",
+      "orderDate": "2024-11-20T12:00:00Z",
+      "status": "Pending",
+      "totalAmount": 250.75
+    },
+    {
+      "id": "ORD125",
+      "customerName": "Sam Wilson",
+      "orderDate": "2024-11-22T10:15:00Z",
+      "status": "Delivered",
+      "totalAmount": 300.99
+    },
+    {
+      "id": "ORD127",
+      "customerName": "John Doe",
+      "orderDate": "2024-11-20T12:00:00Z",
+      "status": "Pending",
+      "totalAmount": 250.75
+    },
+    {
+      "id": "ORD128",
+      "customerName": "Jane Smith",
+      "orderDate": "2024-11-21T14:30:00Z",
+      "status": "Cancelled",
+      "totalAmount": 125.5
+    },
+    {
+      "id": "ORD129",
+      "customerName": "Sam Wilson",
+      "orderDate": "2024-11-22T10:15:00Z",
+      "status": "Shipped",
+      "totalAmount": 300.99
+    },
+    {
+      "id": "ORD130",
+      "customerName": "Tony Stark",
+      "orderDate": "2024-11-23T08:45:00Z",
+      "status": "Cancelled",
+      "totalAmount": 499.99
+    }
+  ]
+}
