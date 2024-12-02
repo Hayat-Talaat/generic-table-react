@@ -34,7 +34,7 @@ Octane Dashboard is a web application designed for managing orders and user acco
 
 **Back-End**
 
-- Start the JSON Server: `npx json-server --watch db.json --port 5000`
+- Start the JSON Server: `json-server --watch db.json --port 5000`
 - The mock API will be available at [http://localhost:5000](http://localhost:5000).
 
 # Project Structure
@@ -76,7 +76,7 @@ src/
 - PATCH /orders/:id: Update order status.
 - DELETE /orders/:id: Delete an order.
 
-  **Users API**
+**Users API**
 
 - GET /users: Fetch all users.
 - GET /users/:id: Fetch user details by ID.

@@ -105,32 +105,36 @@ const UserManagement: React.FC = () => {
       )}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         {loading ? (
-          <Spinner />
+          <div className="flex justify-center items-center py-8">
+            <Spinner />
+          </div>
         ) : userDetails ? (
-          <div className="space-y-4">
-            <div className="flex justify-between">
-              <span className="font-bold text-gray-700">User ID:</span>
-              <span>{userDetails.id}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-bold text-gray-700">Username:</span>
-              <span>{userDetails.username}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-bold text-gray-700">Email:</span>
-              <span>{userDetails.email}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-bold text-gray-700">Role:</span>
-              <span>{userDetails.role}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-bold text-gray-700">Active Status:</span>
-              <span>{userDetails.isActive ? "Active" : "Inactive"}</span>
-            </div>
+          <div className="space-y-6">
+            {[
+              { label: "User ID", value: userDetails.id },
+              { label: "Username", value: userDetails.username },
+              { label: "Email", value: userDetails.email },
+              { label: "Role", value: userDetails.role },
+              {
+                label: "Active Status",
+                value: userDetails.isActive ? (
+                  <span className="text-green-600 font-semibold">Active</span>
+                ) : (
+                  <span className="text-red-600 font-semibold">Inactive</span>
+                ),
+              },
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                className="flex justify-between items-center border-b last:border-b-0 pb-2"
+              >
+                <span className="font-medium text-gray-600">{item.label}:</span>
+                <span className="text-gray-800">{item.value}</span>
+              </div>
+            ))}
           </div>
         ) : (
-          <p className="text-gray-500 text-center">No details available.</p>
+          <p className="text-center text-gray-500">No details available.</p>
         )}
       </Modal>
     </div>

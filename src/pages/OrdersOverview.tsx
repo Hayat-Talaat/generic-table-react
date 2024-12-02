@@ -113,48 +113,55 @@ const OrdersOverview: React.FC = () => {
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         {loading ? (
-          <Spinner />
+          <div className="flex justify-center items-center py-8">
+            <Spinner />
+          </div>
         ) : orderDetails ? (
-          <div className="space-y-4">
-            <div className="flex justify-between">
-              <span className="font-bold text-gray-700">Order ID:</span>
-              <span>{orderDetails.id}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-bold text-gray-700">Customer Name:</span>
-              <span>{orderDetails.customerName}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-bold text-gray-700">Order Date:</span>
-              <span>
-                {new Date(orderDetails.orderDate).toLocaleDateString()}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-bold text-gray-700">Status:</span>
-              <span
-                className={`px-2 py-1 rounded text-white ${
-                  orderDetails.status === "Pending"
-                    ? "bg-yellow-500"
-                    : orderDetails.status === "Shipped"
-                    ? "bg-blue-500"
-                    : orderDetails.status === "Delivered"
-                    ? "bg-green-500"
-                    : "bg-red-500"
-                }`}
+          <div className="space-y-6">
+            {[
+              { label: "Order ID", value: orderDetails.id },
+              { label: "Customer Name", value: orderDetails.customerName },
+              {
+                label: "Order Date",
+                value: new Date(orderDetails.orderDate).toLocaleDateString(),
+              },
+              {
+                label: "Status",
+                value: (
+                  <span
+                    className={`px-2 py-1 rounded font-bold text-white ${
+                      {
+                        Pending: "bg-yellow-500",
+                        Shipped: "bg-blue-500",
+                        Delivered: "bg-green-500",
+                        Cancelled: "bg-red-500",
+                      }[orderDetails.status] || "bg-red-500"
+                    }`}
+                  >
+                    {orderDetails.status}
+                  </span>
+                ),
+              },
+              {
+                label: "Total Amount",
+                value: (
+                  <span className="text-blue-600 font-bold">
+                    ${orderDetails.totalAmount.toFixed(2)}
+                  </span>
+                ),
+              },
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                className="flex justify-between items-center border-b last:border-b-0 pb-2"
               >
-                {orderDetails.status}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-bold text-gray-700">Total Amount:</span>
-              <span className="text-blue-600 font-bold">
-                ${orderDetails.totalAmount.toFixed(2)}
-              </span>
-            </div>
+                <span className="font-medium text-gray-600">{item.label}:</span>
+                <span className="text-gray-800">{item.value}</span>
+              </div>
+            ))}
           </div>
         ) : (
-          <p className="text-gray-500 text-center">No details available.</p>
+          <p className="text-center text-gray-500">No details available.</p>
         )}
       </Modal>
     </div>
