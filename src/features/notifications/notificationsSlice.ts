@@ -1,14 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface Notification {
-  id: string;
-  message: string;
-  type: "success" | "error" | "info";
-}
-
-interface NotificationsState {
-  notifications: Notification[];
-}
+import { NotificationsState } from "../../types/NotificationType";
 
 const initialState: NotificationsState = {
   notifications: [],
