@@ -1,14 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "../../api/axios";
-import { User } from "../../types/UserType";
+import { User, UsersState } from "../../types/UserType";
 import { addNotification } from "../notifications/notificationsSlice";
-
-interface UsersState {
-  users: User[];
-  userDetails: User | null;
-  loading: boolean;
-  error: string | null;
-}
 
 const initialState: UsersState = {
   users: [],
